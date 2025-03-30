@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  min-height: 100vh;
+  color: white;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  
+  body {
+    @apply bg-white text-gray-900;
+  }
+}
+
+@layer components {
+  .prose {
+    @apply text-gray-700;
+  }
+  
+  .prose p {
+    @apply mb-4 leading-relaxed;
+  }
+  
+  .prose ul {
+    @apply mb-4 list-disc list-inside;
+  }
+  
+  .prose ol {
+    @apply mb-4 list-decimal list-inside;
+  }
+  
+  .prose h1 {
+    @apply text-2xl font-semibold mb-4;
+  }
+  
+  .prose h2 {
+    @apply text-xl font-semibold mb-3;
+  }
+  
+  .prose h3 {
+    @apply text-lg font-semibold mb-2;
+  }
+  
+  .prose a {
+    @apply text-blue-600 hover:underline;
+  }
+  
+  .prose code {
+    @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+  }
+  
+  .prose pre {
+    @apply bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+  }
+  
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
+  
+  .prose blockquote {
+    @apply border-l-4 border-gray-200 pl-4 italic my-4;
+  }
+
+  .glass-card {
+    @apply bg-[#1a1a23]/50 backdrop-blur-lg border border-white/10 rounded-xl;
+  }
+  
+  .feature-card {
+    @apply p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg cursor-pointer rounded-xl border border-white/10;
+    background: linear-gradient(45deg, rgba(26,26,35,0.8), rgba(26,26,35,0.4));
+  }
+
+  .glow {
+    @apply relative;
+  }
+
+  .glow::after {
+    content: '';
+    @apply absolute inset-[-1px] opacity-0 transition-opacity duration-300;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+    filter: blur(5px);
+    z-index: -1;
+  }
+
+  .glow:hover::after {
+    @apply opacity-50;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  @apply w-1.5;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded hover:bg-gray-300 transition-colors;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.shimmer {
+  @apply relative overflow-hidden;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.1) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}

@@ -1,0 +1,125 @@
+/* Standard Chat UI Styles */
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#chat-container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+
+header {
+    background: #2a2a2a;
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header p {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #aaa;
+}
+
+#chat-window {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.message {
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.user-message {
+    align-self: flex-end;
+    background: #0066ff;
+    color: white;
+}
+
+.ai-message {
+    align-self: flex-start;
+    background: #4a4a4a;
+    color: white;
+}
+
+.loading {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.loading .dot {
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: blink 1.5s infinite ease-in-out;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+#input-area {
+    display: flex;
+    padding: 12px;
+    background: #1a1a1a;
+    border-top: 1px solid #333;
+}
+
+#userInput {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #2a2a2a;
+    color: white;
+    outline: none;
+    font-size: 14px;
+}
+
+button {
+    margin-left: 8px;
+    padding: 10px 14px;
+    background: #0066ff;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0056e0;
+}

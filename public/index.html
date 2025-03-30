@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twizzy Twin</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="chat-container">
+        <header>
+            <h1>Twizzy Twin</h1>
+            <p>Your twin assistant, powered by opium vibes</p>
+        </header>
+        <div id="chat-window">
+            <div class="message ai-message">Yo, I'm your Twin AI. What's the vibe?</div>
+        </div>
+        <div id="input-area">
+            <input type="text" id="userInput" placeholder="Ask me anything, human..." autocomplete="off">
+            <button onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('userInput').value.trim();
+            if (!input) return;
+
+            const chatWindow = document.getElementById('chat-window');
+            chatWindow.innerHTML += `<div class="message user-message">${input}</div>`;
+            chatWindow.innerHTML += `<div class="message ai-message loading">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>`;
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+
+            try {
+                const response = await fetch('http://localhost:3000/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: input }),
+                });
+                const data = await response.json();
+
+                // Remove loading message and add response
+                const loadingMsg = chatWindow.querySelector('.loading');
+                if (loadingMsg) loadingMsg.remove();
+                
+                // Ensure response is a string
+                const responseText = typeof data.response === 'string' 
+                    ? data.response 
+                    : JSON.stringify(data.response);
+                
+                chatWindow.innerHTML += `<div class="message ai-message">${responseText}</div>`;
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+
+                // Check for exit intent in a safer way
+                if (responseText && responseText.includes && responseText.includes('Peace out!')) {
+                    document.getElementById('input-area').style.display = 'none';
+                }
+            } catch (error) {
+                const loadingMsg = chatWindow.querySelector('.loading');
+                if (loadingMsg) loadingMsg.remove();
+                chatWindow.innerHTML += `<div class="message ai-message error">Oops, hit a glitch: ${error.message}</div>`;
+            }
+
+            document.getElementById('userInput').value = '';
+        }
+
+        // Enter key support
+        document.getElementById('userInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+        
+        // Focus input on load
+        window.onload = function() {
+            document.getElementById('userInput').focus();
+        };
+    </script>
+</body>
+</html>
